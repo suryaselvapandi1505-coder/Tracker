@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2c3e50">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Parts Tracker">
+  <title>Supplier Parts Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <header class="header">
+    <h1>Supplier Parts Tracker</h1>
+    <a href="#" id="mobile-app-link" class="mobile-app-link">Download mobile app</a>
+  </header>
+  <div id="install-prompt" class="install-prompt hidden">
+    <p>Install this app on your phone: open this link on your mobile browser, then use <strong>Add to Home Screen</strong> (iOS) or <strong>Install app</strong> (Android).</p>
+    <p class="install-url" id="install-url"></p>
+    <button type="button" id="install-close" class="btn btn-secondary btn-small">Close</button>
+  </div>
+
+  <main class="main">
+    <!-- Dashboard: supplier cards + add supplier -->
+    <section id="dashboard" class="view">
+      <h2>Select a supplier</h2>
+      <button type="button" id="add-supplier" class="btn btn-primary">+ Add supplier</button>
+      <div id="add-supplier-form" class="form-panel hidden">
+        <h4>New supplier</h4>
+        <label>Supplier name <input type="text" id="new-supplier-name" placeholder="e.g. Supplier 5"></label>
+        <div class="form-actions">
+          <button type="button" id="save-supplier" class="btn btn-primary">Save</button>
+          <button type="button" id="cancel-supplier" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+      <div class="supplier-cards" id="supplier-cards"></div>
+    </section>
+
+    <!-- Supplier detail: projects + line items -->
+    <section id="supplier-detail" class="view hidden">
+      <nav class="breadcrumb">
+        <button type="button" id="back-to-dashboard" class="btn btn-secondary">← Back to suppliers</button>
+      </nav>
+      <div class="supplier-detail-header">
+        <h2 id="supplier-detail-title">Supplier</h2>
+        <div class="supplier-detail-actions">
+          <button type="button" id="export-excel" class="btn btn-primary">Export to Excel</button>
+        </div>
+      </div>
+      <p class="supplier-rename-hint">Click supplier name to edit.</p>
+
+      <div class="projects-section">
+        <h3>Projects</h3>
+        <div class="search-filter-bar">
+          <input type="text" id="search-projects" placeholder="Search project code or name" class="search-input">
+          <label class="status-filter-label">Status:</label>
+          <select id="status-filter" class="status-filter">
+            <option value="all">All</option>
+            <option value="received">Received only</option>
+            <option value="pending">Pending only</option>
+          </select>
+        </div>
+        <div class="project-actions-row">
+          <button type="button" id="add-project" class="btn btn-secondary">+ Add project</button>
+          <label class="btn btn-secondary import-label">
+            Import from Excel
+            <input type="file" id="import-excel-input" accept=".xlsx,.xls" hidden>
+          </label>
+        </div>
+        <p class="import-hint">Excel columns: Project code, Project name, No. of Line items, Received, Pending (first row = headers)</p>
+        <div id="projects-list"></div>
+      </div>
+
+      <!-- Add project modal/form (inline or modal) -->
+      <div id="add-project-form" class="form-panel hidden">
+        <h4>New project</h4>
+        <label>Project code <input type="text" id="new-project-code" placeholder="e.g. PRJ-001"></label>
+        <label>Project name <input type="text" id="new-project-name" placeholder="e.g. Alpha"></label>
+        <div class="form-actions">
+          <button type="button" id="save-project" class="btn btn-primary">Save</button>
+          <button type="button" id="cancel-project" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
